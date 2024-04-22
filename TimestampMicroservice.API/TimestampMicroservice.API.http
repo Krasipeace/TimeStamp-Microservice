@@ -1,0 +1,6 @@
+@TimestampMicroservice.API_HostAddress = http://localhost:5229
+
+GET {{TimestampMicroservice.API_HostAddress}}/timestamp/
+Accept: application/json
+
+###

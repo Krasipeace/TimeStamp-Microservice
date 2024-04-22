@@ -1,0 +1,20 @@
+﻿@model TimeStampViewModel
+@{
+    ViewData["Title"] = "Get Unix Timestamp";
+}
+
+<h2>Current Timestamp, Date, Utc and Local time</h2>
+
+@* <div class="text-center">
+    <p>Unix Time: @Model.Unix (ms)</p>
+    <p>UTC Time: @Model.Utc</p>
+    <p>Local Time: @Model.Local (if available*)</p>
+</div> *@
+
+<div class="center">
+    <a asp-action="GetCurrent" asp-controller="App" class="btn btn-success">Generate Timestamp</a>
+</div>
+
+<footer>
+    <p>* - Specific environments like Docker Containers etc., will need a setup to make local time working properly.</p>
+</footer>
