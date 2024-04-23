@@ -34,9 +34,25 @@
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult GetDateTime()
         {
-            return View("DateTime");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult GetDateTime(string timestamp)
+        {
+            HttpResponseMessage response = httpClient.GetAsync($"{baseUrl}{timestamp}").Result;
+            string jsonResponse = response.Content.ReadAsStringAsync().Result;
+
+            var viewModel = JsonConvert.DeserializeObject<TimeStampViewModel>(jsonResponse);
+
+            HumanDateTimeViewModel model = new();
+            model.Utc = viewModel!.Utc;
+            model.Local = viewModel.Local;
+
+            return View(model);
         }
     }
 }

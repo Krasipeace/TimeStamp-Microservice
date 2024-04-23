@@ -7,7 +7,7 @@
             .then(function() {
                 copyText.style.display = "none";
                 var popup = document.createElement("div");
-                popup.innerHTML = "Copied the text: " + copyText.value;
+                popup.innerHTML = "Copied the timestamp: " + copyText.value;
                 popup.classList.add("popup");
                 popup.style.display = "flex";
                 popup.style.justifyContent = "center";
@@ -18,7 +18,7 @@
                 }, 1000);
             })
             .catch(function(error) {
-                console.error("Failed to copy text: " + error);
+                console.error("Failed to copy timestamp: " + error);
             });
     });
 }

@@ -6,13 +6,12 @@
 
     public class HumanDateTimeViewModel
     {
-        [StringLength(InputMaxLength, MinimumLength = InputMinLength)]
+        [StringLength(StringMaxLength, MinimumLength = StringMinLength)]
         public string Utc { get; set; } = string.Empty;
 
-        [StringLength(InputMaxLength, MinimumLength = InputMinLength)]
+        [StringLength(StringMaxLength, MinimumLength = StringMinLength)]
         public string Local { get; set; } = string.Empty;
 
-        [Range(0, long.MaxValue)]
-        public string? Timestamp { get; set; } 
+        public string? Timestamp { get; set; }
     }
 }
