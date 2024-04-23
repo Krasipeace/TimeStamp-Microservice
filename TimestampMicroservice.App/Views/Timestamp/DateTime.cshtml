@@ -5,11 +5,13 @@
 
 <h2>Get Date and Time from Timestamp</h2>
 
-<form asp-action="GetDateTime" asp-controller="App" method="post">
-    <div class="form-group">
-        <label asp-for="Timestamp" class="control-label"></label>
-        <input asp-for="Timestamp" class="form-control" />
-        <span asp-validation-for="Timestamp" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Get Date and Time</button>
-</form>
+<div class="col-md-6">
+    <form asp-action="GetDateTime" asp-controller="Timestamp" method="post">
+        <div class="form-group align-content-center">
+            <label asp-for="Timestamp" class="control-label"></label>
+            <input asp-for="Timestamp" class="form-control" />
+            <span asp-validation-for="Timestamp" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Get Date and Time</button>
+    </form>
+</div>

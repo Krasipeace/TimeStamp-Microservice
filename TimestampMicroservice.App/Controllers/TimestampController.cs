@@ -9,7 +9,8 @@
     public class TimestampController : Controller
     {
         private readonly HttpClient httpClient;
-        readonly Uri baseUrl = new("https://localhost:44340/api/Timestamp/");
+        //readonly Uri baseUrl = new("https://localhost:44340/api/Timestamp/");
+        readonly Uri baseUrl = new(Environment.GetEnvironmentVariable("BASE_URL") ?? "https://localhost:44340/api/Timestamp/");
 
         public TimestampController(HttpClient httpClient)
         {

@@ -1,4 +1,10 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿function copyUnix() {
+    document.querySelector('.copy-btn').addEventListener('click', function() {
+        var copyText = document.getElementById("unixInput");
+        copyText.style.display = "block";
+        copyText.select();
+        document.execCommand("copy");
+        copyText.style.display = "none";
+        alert("Copied the text: " + copyText.value);
+    });
+}

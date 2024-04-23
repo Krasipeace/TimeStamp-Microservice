@@ -7,19 +7,30 @@
 
 <div class="row">
     <div class="text-center">
-    @if (Model != null)
-    {
-        <p class="text-center">Unix Time: @Model.Unix</p>
-        <p class="text-center">UTC Time: @Model.Utc</p>
-        <p class="text-center">Local Time: @Model.Local (if available*)</p>
-    }
-    else
-    {
-        <p class="text-center">Loading data...</p>
-    }
+        @if (Model != null)
+        {
+            <p class="text-center">
+                Unix Time: @Model.Unix
+                <button class="copy-btn" data-copy-value="@Model.Unix">Copy</button>
+                <input type="text" value="@Model.Unix" id="unixInput" style="display:none;">
+            </p>
+            <p class="text-center">UTC Time: @Model.Utc</p>
+            <p class="text-center">Local Time: @Model.Local (if available*)</p>
+
+            <p class="text-center"><a href="/Timestamp/GetCurrent" class="btn btn-outline-dark">Refresh</a></p>
+        }
+        else
+        {
+            <p class="text-center">Loading data...</p>
+        }
     </div>
 </div>
 
 <footer class="text-center">
-    <p>* - Specific environments like Docker Containers etc., will need a setup to make local time working properly.</p>
+    <p>* - Specific environments like Docker Containers etc., will need a setup to make local time work properly.</p>
 </footer>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    <script>copyUnix();</script>
+}
