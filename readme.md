@@ -1,10 +1,18 @@
+# Timestamp Microservice
 
+A simple microservice that returns the current timestamp in Unix, UTC and Local format. Parses Timestamp to UTC and local time and date.
 
-App: 
+## App: 
 
--- to be filled
+- Generate Unix Timestamps UI
 
-Api: 
+![GenerateTimestampsUI](3.PNG)
+
+- Convert Timestamps to Date and Time
+  
+![ConvertTimestampsUI](4.PNG)
+
+## API: 
 
 - Generate Unix Timestamps
 
