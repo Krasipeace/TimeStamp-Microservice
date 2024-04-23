@@ -1,12 +1,10 @@
-using TimestampMicroservice.App.Contracts;
-using TimestampMicroservice.App.Services;
+using NuGet.Protocol;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<ITimestampService, TimestampService>();
 
 var app = builder.Build();
 

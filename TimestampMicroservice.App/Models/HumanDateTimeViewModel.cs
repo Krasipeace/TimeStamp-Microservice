@@ -11,5 +11,8 @@
 
         [StringLength(InputMaxLength, MinimumLength = InputMinLength)]
         public string Local { get; set; } = string.Empty;
+
+        [Range(0, long.MaxValue)]
+        public string? Timestamp { get; set; } 
     }
 }

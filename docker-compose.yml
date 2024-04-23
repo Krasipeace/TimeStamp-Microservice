@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  timestampmicroservice.app:
+    image: ${DOCKER_REGISTRY-}timestampmicroserviceapp
+    build:
+      context: .
+      dockerfile: TimestampMicroservice.App/Dockerfile
+    ports:
+      - "3005:3005"
+  timestampmicroservice.api:
+    image: ${DOCKER_REGISTRY-}timestampmicroserviceapi
+    build:
+      context: .
+      dockerfile: TimestampMicroservice.Api/Dockerfile
+    depends_on:
+      - timestampmicroservice.app
+    ports:
+      - "5000:80"

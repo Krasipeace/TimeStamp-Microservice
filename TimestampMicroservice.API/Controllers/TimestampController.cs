@@ -5,7 +5,7 @@ namespace TimestampMicroservice.API.Controllers
     using static TimestampMicroservice.Common.ApiConstants;
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TimestampController : ControllerBase
     {
         [HttpGet]
