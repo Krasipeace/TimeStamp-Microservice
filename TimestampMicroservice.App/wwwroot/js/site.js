@@ -3,8 +3,22 @@
         var copyText = document.getElementById("unixInput");
         copyText.style.display = "block";
         copyText.select();
-        document.execCommand("copy");
-        copyText.style.display = "none";
-        alert("Copied the text: " + copyText.value);
+        navigator.clipboard.writeText(copyText.value)
+            .then(function() {
+                copyText.style.display = "none";
+                var popup = document.createElement("div");
+                popup.innerHTML = "Copied the text: " + copyText.value;
+                popup.classList.add("popup");
+                popup.style.display = "flex";
+                popup.style.justifyContent = "center";
+                popup.style.alignItems = "center";
+                document.body.appendChild(popup);
+                setTimeout(function() {
+                    document.body.removeChild(popup);
+                }, 1000);
+            })
+            .catch(function(error) {
+                console.error("Failed to copy text: " + error);
+            });
     });
 }

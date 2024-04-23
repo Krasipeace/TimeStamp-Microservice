@@ -4,6 +4,6 @@
     {
         public const string DateTimeStringFormat = "dd-MM-yyyy HH:mm:ss";
 
-        public const string InvalidInputOrOutputErrorMessage = "Invalid Date or Timestamp";
+        public const string InvalidTimestampInputErrorMessage = "Invalid Timestamp";
     }
 }

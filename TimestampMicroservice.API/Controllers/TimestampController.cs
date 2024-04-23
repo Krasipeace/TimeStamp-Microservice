@@ -28,7 +28,7 @@ namespace TimestampMicroservice.API.Controllers
             {
                 return BadRequest(new 
                 { 
-                    error = InvalidInputOrOutputErrorMessage 
+                    error = InvalidTimestampInputErrorMessage 
                 });
             }
 
