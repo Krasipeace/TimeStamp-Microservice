@@ -5,31 +5,21 @@
     using Newtonsoft.Json;
 
     using TimestampMicroservice.App.Models;
+    using TimestampMicroservice.App.Services.Contracts;
 
     public class TimestampController : Controller
     {
-        private readonly HttpClient httpClient;
-        //readonly Uri baseUrl = new("https://localhost:44340/api/Timestamp/");
-        readonly Uri baseUrl = new(Environment.GetEnvironmentVariable("BASE_URL") ?? "https://localhost:44340/api/Timestamp/");
+        private readonly ITimestampService timeService;
 
-        public TimestampController(HttpClient httpClient)
+        public TimestampController(ITimestampService timeService)
         {
-            this.httpClient = httpClient;
-            this.httpClient.BaseAddress = baseUrl;
+            this.timeService = timeService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetCurrent()
         {
-            HttpResponseMessage response = await httpClient.GetAsync(baseUrl);
-            string jsonResponse = await response.Content.ReadAsStringAsync();
-
-            var viewModel = JsonConvert.DeserializeObject<TimeStampViewModel>(jsonResponse);
-
-            TimeStampViewModel model = new();
-            model.Unix = viewModel!.Unix;
-            model.Utc = viewModel.Utc;
-            model.Local = viewModel.Local;
+            var model = await timeService.GetCurrentTimeAsync();
 
             return View(model);
         }
@@ -41,18 +31,11 @@
         }
 
         [HttpPost]
-        public IActionResult GetDateTime(string timestamp)
+        public async Task<IActionResult> GetDateTime(string timestamp)
         {
-            HttpResponseMessage response = httpClient.GetAsync($"{baseUrl}{timestamp}").Result;
-            string jsonResponse = response.Content.ReadAsStringAsync().Result;
+            var result = await timeService.GetDateTimeAsync(timestamp);
 
-            var viewModel = JsonConvert.DeserializeObject<TimeStampViewModel>(jsonResponse);
-
-            HumanDateTimeViewModel model = new();
-            model.Utc = viewModel!.Utc;
-            model.Local = viewModel.Local;
-
-            return View(model);
+            return View(result);
         }
     }
 }
