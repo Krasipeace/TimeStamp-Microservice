@@ -1,6 +1,7 @@
 ﻿namespace TimestampMicroservice.App.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Configuration;
 
     using static TimestampMicroservice.Common.AppConstants;
 
@@ -12,6 +13,7 @@
         [StringLength(StringMaxLength, MinimumLength = StringMinLength)]
         public string Local { get; set; } = string.Empty;
 
+        [RegexStringValidator(TimestampInputRegexValidation)]
         public string? Timestamp { get; set; }
     }
 }

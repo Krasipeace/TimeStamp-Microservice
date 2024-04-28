@@ -2,9 +2,6 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    using Newtonsoft.Json;
-
-    using TimestampMicroservice.App.Models;
     using TimestampMicroservice.App.Services.Contracts;
 
     public class TimestampController : Controller
