@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 using Xunit;
 using Moq;
 using Newtonsoft.Json;
+using Moq.Protected;
 using TimestampMicroservice.App.Controllers;
 using TimestampMicroservice.App.Models;
 using TimestampMicroservice.App.Services.Contracts;
 using TimestampMicroservice.App.Services;
-using Moq.Protected;
 
 public class TimestampServiceTests
 {
@@ -82,5 +82,23 @@ public class TimestampServiceTests
 
         Assert.Equal(expectedModel.Utc, result.Utc);
         Assert.Equal(expectedModel.Local, result.Local);
+    }
+
+    [Fact]
+    public async Task GetDateTime_ReturnsCorrectViewResultWithHumanDateTimeViewModel()
+    {
+        var expectedModel = new HumanDateTimeViewModel 
+        { 
+            Utc = "28-04-2024 17:23:06", 
+            Local = "28-04-2024 20:23:06" 
+        };
+        mockTimeService.Setup(x => x.GetDateTimeAsync(It.IsAny<string>())).ReturnsAsync(expectedModel);
+
+        var result = await controller.GetDateTime("1714324986");
+
+        var viewResult = Assert.IsType<ViewResult>(result);
+        var model = Assert.IsAssignableFrom<HumanDateTimeViewModel>(viewResult.ViewData.Model);
+        Assert.Equal(expectedModel.Utc, model.Utc);
+        Assert.Equal(expectedModel.Local, model.Local);
     }
 }

@@ -9,6 +9,6 @@
 
         public const string InvalidResponseExceptionMessage = "Cannot retrieve timestamp from the server.";
 
-        public const string TimestampInputRegexValidation = "@[1-9]\\d{0,9}";
+        public const string TimestampInputRegexValidation = "@[1-9]\\d{0,12}";
     }
 }

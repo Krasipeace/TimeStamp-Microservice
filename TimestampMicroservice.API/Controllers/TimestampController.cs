@@ -26,19 +26,34 @@ namespace TimestampMicroservice.API.Controllers
         {
             if (!long.TryParse(timestamp, out long unixTimestamp))
             {
-                return BadRequest(new 
-                { 
-                    error = InvalidTimestampInputErrorMessage 
+                return BadRequest(new
+                {
+                    error = InvalidTimestampInputErrorMessage
                 });
             }
 
-            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(unixTimestamp);
-
-            return Ok(new
+            if (unixTimestamp < DateTimeOffset.MinValue.ToUnixTimeSeconds() || unixTimestamp > DateTimeOffset.MaxValue.ToUnixTimeSeconds())
             {
-                utc = dateTimeOffset.ToString(DateTimeStringFormat),
-                local = dateTimeOffset.ToLocalTime().ToString(DateTimeStringFormat)
-            });
+                return BadRequest(new
+                {
+                    error = TimestampOutOfRangeExceptionMessage
+                });
+            }
+
+            try
+            {
+                DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(unixTimestamp);
+
+                return Ok(new
+                {
+                    utc = dateTimeOffset.ToString(DateTimeStringFormat),
+                    local = dateTimeOffset.ToLocalTime().ToString(DateTimeStringFormat)
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentOutOfRangeException($"Timestamp is out of range {ex}");
+            }
         }
     }
 }
