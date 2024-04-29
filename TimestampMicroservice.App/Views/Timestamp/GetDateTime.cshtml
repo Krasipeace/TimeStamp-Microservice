@@ -1,16 +1,16 @@
 ﻿@model HumanDateTimeViewModel
 @{
-    ViewData["Title"] = "Paste Timestamp and get Date and Time";
+    ViewData["Title"] = GetDateTimeViewTitle;
 }
 
 <h2 class="text-center">Get Date and Time from Timestamp</h2>
 <div class="row">
     <div class="text-center">
-        <form asp-action="GetDateTime" asp-controller="Timestamp" method="post">
+        <form asp-action="GetDateTime" asp-controller="Timestamp" method="post" onsubmit="return validateTimestamp()">
             <div class="form-group align-content-center">
                 <label asp-for="Timestamp" class="control-label">Write timestamp here:</label>
                 <div class="align-content-center">
-                    <input asp-for="Timestamp" class="form-control text-center" />
+                    <input asp-for="Timestamp" class="form-control text-center" id="timestamp" />
                 </div>
                 <span asp-validation-for="Timestamp" class="text-danger"></span>
             </div>
@@ -33,3 +33,7 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}
