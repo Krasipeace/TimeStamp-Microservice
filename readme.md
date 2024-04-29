@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/krasipeace/timestamp-microservice/badge/main)](https://www.codefactor.io/repository/github/krasipeace/timestamp-microservice/overview/main)
+
 # Timestamp Microservice
 
 A simple microservice that returns the current timestamp in Unix, UTC and Local format. Parses Timestamp to UTC and local time and date.
