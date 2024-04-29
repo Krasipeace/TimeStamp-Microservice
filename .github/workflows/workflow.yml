@@ -37,4 +37,4 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Test
-      run: dotnet test TimeStamp-Microservice/TimeStamp-Microservice/TimeStampMicroservice.Tests/TimeStampMicroservice.Tests.csproj --no-restore --verbosity normal
+      run: dotnet test TimeStampMicroservice.Tests/TimeStampMicroservice.Tests.csproj --no-restore --verbosity normal
