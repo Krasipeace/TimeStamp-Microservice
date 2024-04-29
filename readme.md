@@ -1,4 +1,4 @@
-[![CodeFactor](https://www.codefactor.io/repository/github/krasipeace/timestamp-microservice/badge/main)](https://www.codefactor.io/repository/github/krasipeace/timestamp-microservice/overview/main)
+[![CodeFactor](https://www.codefactor.io/repository/github/krasipeace/timestamp-microservice/badge/main)](https://www.codefactor.io/repository/github/krasipeace/timestamp-microservice/overview/main) [![CI Workflow](https://github.com/Krasipeace/TimeStamp-Microservice/actions/workflows/workflow.yml/badge.svg)](https://github.com/Krasipeace/TimeStamp-Microservice/actions/workflows/workflow.yml)
 
 # Timestamp Microservice
 
