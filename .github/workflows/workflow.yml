@@ -1,0 +1,48 @@
+name: CI Workflow
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.cs'
+      - '**.csproj'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.cs'
+      - '**.csproj'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: |
+        dotnet build ./TimestampMicroservice.API/TimestampMicroservice.API.csproj --configuration Release --no-restore
+        dotnet build ./TimestampMicroservice.App/TimestampMicroservice.App.csproj --configuration Release --no-restore
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Test
+      run: dotnet test TimestampMicroservice/TimeStampMicroservice.Tests/TimeStampMicroservice.Tests.csproj --no-restore --verbosity normal
