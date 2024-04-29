@@ -37,7 +37,7 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore dependencies for tests
-      run: dotnet restore Timestamp-Microservice/TimeStampMicroservice.Tests/TimeStampMicroservice.Tests.csproj
+      run: dotnet restore TimestampMicroservice/TimeStampMicroservice.Tests/TimeStampMicroservice.Tests.csproj
       
     - name: Test
-      run: dotnet test Timestamp-Microservice/TimeStampMicroservice.Tests/TimeStampMicroservice.Tests.csproj --no-restore --verbosity normal
+      run: dotnet test TimestampMicroservice/TimeStampMicroservice.Tests/TimeStampMicroservice.Tests.csproj --no-restore --verbosity normal
