@@ -1,38 +1,37 @@
-﻿namespace TimestampMicroservice.App.Controllers
+﻿namespace TimestampMicroservice.App.Controllers;
+
+using Microsoft.AspNetCore.Mvc;
+
+using TimestampMicroservice.App.Services.Contracts;
+
+public class TimestampController : Controller
 {
-    using Microsoft.AspNetCore.Mvc;
+    private readonly ITimestampService timeService;
 
-    using TimestampMicroservice.App.Services.Contracts;
-
-    public class TimestampController : Controller
+    public TimestampController(ITimestampService timeService)
     {
-        private readonly ITimestampService timeService;
+        this.timeService = timeService;
+    }
 
-        public TimestampController(ITimestampService timeService)
-        {
-            this.timeService = timeService;
-        }
+    [HttpGet]
+    public async Task<IActionResult> GetCurrent()
+    {
+        var model = await timeService.GetCurrentTimeAsync();
 
-        [HttpGet]
-        public async Task<IActionResult> GetCurrent()
-        {
-            var model = await timeService.GetCurrentTimeAsync();
+        return View(model);
+    }
 
-            return View(model);
-        }
+    [HttpGet]
+    public IActionResult GetDateTime()
+    {
+        return View();
+    }
 
-        [HttpGet]
-        public IActionResult GetDateTime()
-        {
-            return View();
-        }
+    [HttpPost]
+    public async Task<IActionResult> GetDateTime(string timestamp)
+    {
+        var result = await timeService.GetDateTimeAsync(timestamp);
 
-        [HttpPost]
-        public async Task<IActionResult> GetDateTime(string timestamp)
-        {
-            var result = await timeService.GetDateTimeAsync(timestamp);
-
-            return View(result);
-        }
+        return View(result);
     }
 }

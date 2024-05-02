@@ -1,5 +1,3 @@
-using NuGet.Protocol;
-
 using TimestampMicroservice.App.Services;
 using TimestampMicroservice.App.Services.Contracts;
 

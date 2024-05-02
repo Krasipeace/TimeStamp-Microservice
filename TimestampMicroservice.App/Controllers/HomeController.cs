@@ -1,34 +1,33 @@
-namespace TimestampMicroservice.App.Controllers
+namespace TimestampMicroservice.App.Controllers;
+
+using Microsoft.AspNetCore.Mvc;
+
+using System.Diagnostics;
+
+using TimestampMicroservice.App.Models;
+
+public class HomeController : Controller
 {
-    using Microsoft.AspNetCore.Mvc;
+    private readonly ILogger<HomeController> _logger;
 
-    using System.Diagnostics;
-
-    using TimestampMicroservice.App.Models;
-
-    public class HomeController : Controller
+    public HomeController(ILogger<HomeController> logger)
     {
-        private readonly ILogger<HomeController> _logger;
+        _logger = logger;
+    }
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

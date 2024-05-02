@@ -101,4 +101,29 @@ public class TimestampServiceTests
         Assert.Equal(expectedModel.Utc, model.Utc);
         Assert.Equal(expectedModel.Local, model.Local);
     }
+
+    [Fact]
+    public async Task GetDateTime_ReturnsBadRequest_WhenTimestampIsOutOfRange()
+    {
+        var expectedModel = new HumanDateTimeViewModel
+        {
+            Utc = "28-04-9999 17:23:20",
+            Local = "28-04-9999 20:23:20"
+        };
+
+        var httpResponse = new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.BadRequest,
+            Content = new StringContent(JsonConvert.SerializeObject(expectedModel), Encoding.UTF8, "application/json"),
+        };
+
+        mockHttpMessageHandler.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(httpResponse);
+
+        var result = await service.GetDateTimeAsync("253402300800");
+
+        Assert.Equal(expectedModel.Utc, result.Utc);
+        Assert.Equal(expectedModel.Local, result.Local);
+    }
 }
