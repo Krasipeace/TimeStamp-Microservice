@@ -8,4 +8,5 @@ public interface ITimestampService
 {
     Task<TimeStampViewModel> GetCurrentTimeAsync();
     Task<HumanDateTimeViewModel> GetDateTimeAsync(string timestamp);
+    Task<ConvertDateTimeViewModel> ConvertDateTimeAsync(DateTime dateTime);
 }

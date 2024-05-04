@@ -55,4 +55,31 @@ public class TimestampController : ControllerBase
             throw new ArgumentOutOfRangeException($"{TimestampOutOfRangeExceptionMessage} {ex}");
         }
     }
+
+    [HttpPost("convert/{dateTime}")]
+    public IActionResult ConvertDateTime(DateTime dateTime)
+    {
+        if (dateTime < DateTime.MinValue || dateTime > DateTime.MaxValue)
+        {
+            return BadRequest(new
+            {
+                error = DateTimeOutOfRangeExceptionMessage
+            });
+        }
+
+        try
+        {
+            dateTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+            dateTime = dateTime.ToOADate() < 0 ? DateTime.MinValue : dateTime;
+
+            return Ok(new
+            {
+                timestamp = new DateTimeOffset(dateTime).ToUnixTimeSeconds()
+            }); ;
+        }
+        catch (Exception ex)
+        {
+            throw new ArgumentOutOfRangeException($"{DateTimeOutOfRangeExceptionMessage} {ex}");
+        }
+    }
 }

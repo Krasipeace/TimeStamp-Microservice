@@ -13,4 +13,5 @@ public static class AppConstants
 
     public const string GetCurrentViewTitle = "Get Unix Timestamp";
     public const string GetDateTimeViewTitle = "Paste Timestamp and get Date and Time";
+    public const string ConvertDateAndTimeToTimestampTitle = "Convert date and time to timestamp";
 }
