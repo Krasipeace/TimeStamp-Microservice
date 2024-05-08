@@ -58,7 +58,7 @@ public class TimestampController : ControllerBase
         }
     }
 
-    [HttpPost("convert/{dateTime}")]
+    [HttpPost("{dateTime}")]
     public IActionResult ConvertDateTime(string dateTime)
     {
         if (!DateTime.TryParseExact(dateTime, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
@@ -77,7 +77,6 @@ public class TimestampController : ControllerBase
             });
         }
 
-        // Format the date and parse it back to a DateTime object
         string formattedDate = parsedDate.ToString("dd-MM-yyyy HH:mm:ss");
         DateTime finalDate = DateTime.ParseExact(formattedDate, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 

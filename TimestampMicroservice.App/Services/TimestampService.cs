@@ -2,13 +2,18 @@
 
 using Newtonsoft.Json;
 
+using System.Text;
+
 using TimestampMicroservice.App.Models;
 using TimestampMicroservice.App.Services.Contracts;
 
 public class TimestampService : ITimestampService
 {
     private readonly HttpClient httpClient;
-    readonly Uri baseUrl = new(Environment.GetEnvironmentVariable("BASE_URL") ?? "https://localhost:44340/api/Timestamp/");
+    /// <summary>
+    /// You can set up BASE_URL .env variable for docker or other start-up options, If not set up, it falls to localhost Uri.
+    /// </summary>
+    Uri baseUrl = new(Environment.GetEnvironmentVariable("BASE_URL") ?? "https://localhost:44340/api/Timestamp/");
 
     public TimestampService(HttpClient httpClient)
     {
@@ -51,15 +56,15 @@ public class TimestampService : ITimestampService
 
     public async Task<ConvertDateTimeViewModel> ConvertDateTimeAsync(string dateTime)
     {
-        HttpResponseMessage response = await httpClient.GetAsync($"{baseUrl}convert/{dateTime}");
+        HttpResponseMessage response = await httpClient.GetAsync($"{baseUrl}{dateTime}");
         string jsonResponse = await response.Content.ReadAsStringAsync();
 
         var viewModel = JsonConvert.DeserializeObject<ConvertDateTimeViewModel>(jsonResponse);
 
-        var model = new ConvertDateTimeViewModel()
+        ConvertDateTimeViewModel model = new()
         {
             EpochTime = viewModel!.EpochTime,
-            EpochTimeLocal = viewModel!.EpochTimeLocal
+            EpochTimeLocal = viewModel.EpochTimeLocal,
         };
 
         return model;
