@@ -58,7 +58,7 @@ public class TimestampController : ControllerBase
         }
     }
 
-    [HttpPost("{dateTime}")]
+    [HttpGet("convert/{dateTime}")]
     public IActionResult ConvertDateTime(string dateTime)
     {
         if (!DateTime.TryParseExact(dateTime, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
@@ -83,8 +83,8 @@ public class TimestampController : ControllerBase
         finalDate = DateTime.SpecifyKind(finalDate, DateTimeKind.Utc);
         finalDate = finalDate.ToOADate() < 0 ? DateTime.MinValue : finalDate;
 
-        var timestampOffset = new DateTimeOffset(finalDate).ToUnixTimeSeconds();
-        var timestampOffsetLocal = new DateTimeOffset(finalDate).ToLocalTime().ToUnixTimeSeconds();
+        var timestampOffset = new DateTimeOffset(finalDate).ToUnixTimeSeconds().ToString();
+        var timestampOffsetLocal = new DateTimeOffset(finalDate).ToLocalTime().ToUnixTimeSeconds().ToString();
 
         try
         {
