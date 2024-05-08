@@ -42,7 +42,7 @@ public class TimestampController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ConvertDateTime(DateTime dateTime)
+    public async Task<IActionResult> ConvertDateTime(string dateTime)
     {
         var result = await timeService.ConvertDateTimeAsync(dateTime);
 

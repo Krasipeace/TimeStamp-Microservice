@@ -2,6 +2,8 @@ namespace TimestampMicroservice.API.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 
+using System.Globalization;
+
 using static TimestampMicroservice.Common.ApiConstants;
 
 [ApiController]
@@ -57,9 +59,17 @@ public class TimestampController : ControllerBase
     }
 
     [HttpPost("convert/{dateTime}")]
-    public IActionResult ConvertDateTime(DateTime dateTime)
+    public IActionResult ConvertDateTime(string dateTime)
     {
-        if (dateTime < DateTime.MinValue || dateTime > DateTime.MaxValue)
+        if (!DateTime.TryParseExact(dateTime, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+        {
+            return BadRequest(new
+            {
+                error = InvalidDateTimeFormatErrorMessage
+            });
+        }
+
+        if (parsedDate < DateTime.MinValue || parsedDate > DateTime.MaxValue)
         {
             return BadRequest(new
             {
@@ -67,15 +77,23 @@ public class TimestampController : ControllerBase
             });
         }
 
+        // Format the date and parse it back to a DateTime object
+        string formattedDate = parsedDate.ToString("dd-MM-yyyy HH:mm:ss");
+        DateTime finalDate = DateTime.ParseExact(formattedDate, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+
+        finalDate = DateTime.SpecifyKind(finalDate, DateTimeKind.Utc);
+        finalDate = finalDate.ToOADate() < 0 ? DateTime.MinValue : finalDate;
+
+        var timestampOffset = new DateTimeOffset(finalDate).ToUnixTimeSeconds();
+        var timestampOffsetLocal = new DateTimeOffset(finalDate).ToLocalTime().ToUnixTimeSeconds();
+
         try
         {
-            dateTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
-            dateTime = dateTime.ToOADate() < 0 ? DateTime.MinValue : dateTime;
-
             return Ok(new
             {
-                timestamp = new DateTimeOffset(dateTime).ToUnixTimeSeconds()
-            }); ;
+                timestamp = timestampOffset,
+                timestampLocal = timestampOffsetLocal
+            });
         }
         catch (Exception ex)
         {

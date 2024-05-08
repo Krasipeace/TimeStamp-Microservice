@@ -7,5 +7,8 @@ public class ConvertDateTimeViewModel
     [Range(0, long.MaxValue)]
     public long EpochTime { get; set; }
 
-    public DateTime DateAndTime { get; set; } = DateTime.Now;
+    [Range(0, long.MaxValue)]
+    public long EpochTimeLocal { get; set; }
+
+    public string DateAndTime { get; set; } = string.Empty;
 }

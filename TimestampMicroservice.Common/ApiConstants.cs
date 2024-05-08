@@ -9,4 +9,6 @@ public static class ApiConstants
     public const string TimestampOutOfRangeExceptionMessage = "Timestamp is out of range";
 
     public const string DateTimeOutOfRangeExceptionMessage = "Date and Time is out of range";
+
+    public const string InvalidDateTimeFormatErrorMessage = "Date time format is invalid try: dd-MM-yyyy HH:mm:ss";
 }

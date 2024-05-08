@@ -1,12 +1,6 @@
 ﻿namespace TimestampMicroservice.App.Services;
 
-using Humanizer;
-
 using Newtonsoft.Json;
-
-using NuGet.Packaging.Signing;
-
-using System.Text;
 
 using TimestampMicroservice.App.Models;
 using TimestampMicroservice.App.Services.Contracts;
@@ -55,13 +49,19 @@ public class TimestampService : ITimestampService
         return model;
     }
 
-    public async Task<ConvertDateTimeViewModel> ConvertDateTimeAsync(DateTime dateTime)
+    public async Task<ConvertDateTimeViewModel> ConvertDateTimeAsync(string dateTime)
     {
         HttpResponseMessage response = await httpClient.GetAsync($"{baseUrl}convert/{dateTime}");
         string jsonResponse = await response.Content.ReadAsStringAsync();
 
         var viewModel = JsonConvert.DeserializeObject<ConvertDateTimeViewModel>(jsonResponse);
 
-        return viewModel!;
+        var model = new ConvertDateTimeViewModel()
+        {
+            EpochTime = viewModel!.EpochTime,
+            EpochTimeLocal = viewModel!.EpochTimeLocal
+        };
+
+        return model;
     }
 }

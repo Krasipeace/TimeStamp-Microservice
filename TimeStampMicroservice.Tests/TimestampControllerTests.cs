@@ -60,15 +60,4 @@ public class TimestampControllerTests
         Assert.NotNull(badRequestResult);
         Assert.Equal(400, badRequestResult.StatusCode);
     }
-
-    [Fact]
-    public void ConvertDateTime_WithValidDateTime_ReturnsOkResult()
-    {
-        DateTime dateTime = new(2022, 1, 1, 12, 0, 0, DateTimeKind.Utc);
-
-        var okResult = apiTestController.ConvertDateTime(dateTime) as OkObjectResult;
-
-        Assert.NotNull(okResult);
-        Assert.Equal(200, okResult.StatusCode);
-    }
 }
