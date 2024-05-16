@@ -83,7 +83,7 @@ public class TimestampController : ControllerBase
         finalDate = DateTime.SpecifyKind(finalDate, DateTimeKind.Utc);
         finalDate = finalDate.ToOADate() < 0 ? DateTime.MinValue : finalDate;
 
-        var timestampOffset = new DateTimeOffset(finalDate).ToUnixTimeSeconds().ToString();
+        var timestampOffset = new DateTimeOffset(finalDate).ToUniversalTime().ToUnixTimeSeconds().ToString();
         var timestampOffsetLocal = new DateTimeOffset(finalDate).ToLocalTime().ToUnixTimeSeconds().ToString();
 
         try

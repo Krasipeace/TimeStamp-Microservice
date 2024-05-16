@@ -60,4 +60,32 @@ public class TimestampControllerTests
         Assert.NotNull(badRequestResult);
         Assert.Equal(400, badRequestResult.StatusCode);
     }
+    [Fact]
+    public void ConvertDateTime_WithValidDateTime_ReturnsOkResult()
+    {
+        string dateTime = "01-01-2024 12:00:00";
+
+        var okResult = apiTestController.ConvertDateTime(dateTime) as OkObjectResult;
+
+        Assert.NotNull(okResult);
+        Assert.Equal(200, okResult.StatusCode);
+    }
+
+    [Fact]
+    public void ConvertDateTime_WithInvalidDateTime_ReturnsBadRequest()
+    {
+        string dateTime = "invalid_datetime";
+
+        var badRequestResult = apiTestController.ConvertDateTime(dateTime) as BadRequestObjectResult;
+
+        Assert.NotNull(badRequestResult);
+        Assert.Equal(400, badRequestResult.StatusCode);
+
+        string dateTimeOutOfRange = "9999-01-01 12:00:00";
+        badRequestResult = apiTestController.ConvertDateTime(dateTimeOutOfRange) as BadRequestObjectResult;
+        Assert.NotNull(badRequestResult);
+        Assert.Equal(400, badRequestResult.StatusCode);
+    }
+
+
 }

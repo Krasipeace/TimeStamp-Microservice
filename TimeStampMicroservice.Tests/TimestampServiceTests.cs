@@ -85,12 +85,12 @@ public class TimestampServiceTests
     }
 
     [Fact]
-    public async Task GetDateTime_ReturnsCorrectViewResultWithHumanDateTimeViewModel()
+    public async Task GetDateTime_ReturnsCorrectViewResult_WithHumanDateTimeViewModel()
     {
-        var expectedModel = new HumanDateTimeViewModel 
-        { 
-            Utc = "28-04-2024 17:23:06", 
-            Local = "28-04-2024 20:23:06" 
+        var expectedModel = new HumanDateTimeViewModel
+        {
+            Utc = "28-04-2024 17:23:06",
+            Local = "28-04-2024 20:23:06"
         };
         mockTimeService.Setup(x => x.GetDateTimeAsync(It.IsAny<string>())).ReturnsAsync(expectedModel);
 
@@ -125,5 +125,23 @@ public class TimestampServiceTests
 
         Assert.Equal(expectedModel.Utc, result.Utc);
         Assert.Equal(expectedModel.Local, result.Local);
+    }
+
+    [Fact]
+    public async Task GetTimestamp_ReturnsCorrectViewResult_WithConvertDateTimeViewModel()
+    {
+        var expectedModel = new ConvertDateTimeViewModel
+        {
+            Timestamp = "1715876123",
+            TimestampLocal = "1715886923"
+        };
+        mockTimeService.Setup(x => x.ConvertDateTimeAsync(It.IsAny<string>())).ReturnsAsync(expectedModel);
+
+        var result = await controller.ConvertDateTime("16-05-2024 16:15:23");
+
+        var viewResult = Assert.IsType<ViewResult>(result);
+        var model = Assert.IsAssignableFrom<ConvertDateTimeViewModel>(viewResult.ViewData.Model);
+        Assert.Equal(expectedModel.Timestamp, model.Timestamp);
+        Assert.Equal(expectedModel.TimestampLocal, model.TimestampLocal);
     }
 }

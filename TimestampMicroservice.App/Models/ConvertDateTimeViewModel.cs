@@ -2,9 +2,9 @@
 
 public class ConvertDateTimeViewModel
 {
-    public string? EpochTime { get; set; }
+    public string DateTime { get; set; } = null!;
 
-    public string? EpochTimeLocal { get; set; }
+    public string Timestamp { get; set; } = null!;
 
-    public string DateAndTime { get; set; } = string.Empty;
+    public string TimestampLocal { get; set; } = null!;
 }
