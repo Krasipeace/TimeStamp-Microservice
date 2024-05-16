@@ -1,4 +1,4 @@
-﻿namespace TimestampMicroservice.Tests;
+namespace TimestampMicroservice.Tests;
 
 using System;
 using Microsoft.AspNetCore.Mvc;
@@ -86,6 +86,4 @@ public class TimestampControllerTests
         Assert.NotNull(badRequestResult);
         Assert.Equal(400, badRequestResult.StatusCode);
     }
-
-
 }
