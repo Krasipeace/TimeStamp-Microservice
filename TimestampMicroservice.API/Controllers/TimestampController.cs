@@ -2,6 +2,8 @@ namespace TimestampMicroservice.API.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 
+using System.Globalization;
+
 using static TimestampMicroservice.Common.ApiConstants;
 
 [ApiController]
@@ -53,6 +55,48 @@ public class TimestampController : ControllerBase
         catch (Exception ex)
         {
             throw new ArgumentOutOfRangeException($"{TimestampOutOfRangeExceptionMessage} {ex}");
+        }
+    }
+
+    [HttpGet("convert/{dateTime}")]
+    public IActionResult ConvertDateTime(string dateTime)
+    {
+        if (!DateTime.TryParseExact(dateTime, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+        {
+            return BadRequest(new
+            {
+                error = InvalidDateTimeFormatErrorMessage
+            });
+        }
+
+        if (parsedDate < DateTime.MinValue || parsedDate > DateTime.MaxValue)
+        {
+            return BadRequest(new
+            {
+                error = DateTimeOutOfRangeExceptionMessage
+            });
+        }
+
+        string formattedDate = parsedDate.ToString("dd-MM-yyyy HH:mm:ss");
+        DateTime finalDate = DateTime.ParseExact(formattedDate, "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+
+        finalDate = DateTime.SpecifyKind(finalDate, DateTimeKind.Utc);
+        finalDate = finalDate.ToOADate() < 0 ? DateTime.MinValue : finalDate;
+
+        var timestampOffset = new DateTimeOffset(finalDate).ToUniversalTime().ToUnixTimeSeconds().ToString();
+        var timestampOffsetLocal = new DateTimeOffset(finalDate).ToLocalTime().ToUnixTimeSeconds().ToString();
+
+        try
+        {
+            return Ok(new
+            {
+                timestamp = timestampOffset,
+                timestampLocal = timestampOffsetLocal
+            });
+        }
+        catch (Exception ex)
+        {
+            throw new ArgumentOutOfRangeException($"{DateTimeOutOfRangeExceptionMessage} {ex}");
         }
     }
 }

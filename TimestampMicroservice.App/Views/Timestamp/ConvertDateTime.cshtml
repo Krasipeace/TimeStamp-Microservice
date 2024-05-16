@@ -1,0 +1,39 @@
+﻿@model ConvertDateTimeViewModel
+@{
+    ViewData["Title"] = ConvertDateAndTimeToTimestampTitle;
+}
+
+<h2 class="text-center">Convert date and time</h2>
+<div class="row">
+    <div class="text-center">
+        <form asp-action="ConvertDateTime" asp-controller="Timestamp">
+            <div class="form-group align-content-center">
+                <label asp-for="DateTime" class="control-label">Date and Time:</label>
+                <div class="align-content-center">
+                    <input asp-for="DateTime" class="form-control text-center" id="utc" />
+                </div>
+                <span asp-validation-for="DateTime" class="text-danger"></span>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-outline-success">Get Unix Time</button>
+        </form>
+        <br />
+        @if (Model != null)
+        {
+            <div class="row">
+                <div class="text-center">
+                    <h4 class="text-center">Utc Timestamp:</h4>
+                    <p class="text-center">@Model.Timestamp</p>
+                </div>
+                <div class="text-center">
+                    <h4 class="text-center">Local Timestamp:</h4>
+                    <p class="text-center">@Model.TimestampLocal</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}

@@ -34,4 +34,18 @@ public class TimestampController : Controller
 
         return View(result);
     }
+
+    [HttpGet]
+    public IActionResult ConvertDateTime()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ConvertDateTime(string dateTime)
+    {
+        var result = await timeService.ConvertDateTimeAsync(dateTime);
+
+        return View(result);
+    }
 }
